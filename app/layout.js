@@ -1,9 +1,8 @@
-import { Toaster } from "@/components/ui/sonner";
-import { cn } from "@/lib/utils";
-import { connectDB } from "@/services/mongo";
-import { Inter } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
-
+import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/sonner";
+import { dbConnect } from "@/service/mongo";
 const inter = Inter({ subsets: ["latin"] });
 const poppins = Inter({ subsets: ["latin"], variable: "--font-poppins" });
 
@@ -13,13 +12,13 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  await connectDB();
-
+  const conn  = await dbConnect();
   return (
     <html lang="en">
-      <body className={cn(inter.className, poppins.className)}>
-        {children}
-        <Toaster richColors position="top-center" />
+      <body
+        className={cn(inter.className, poppins.className)}>
+          {children}
+          <Toaster richColors position="top-center"/>
       </body>
     </html>
   );
